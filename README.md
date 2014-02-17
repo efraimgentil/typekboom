@@ -1,4 +1,4 @@
-typekboom
+Type KBoom
 =========
 
-A game showcase using Java/Websockets + MongoDB
+It is a game showcase using Java / Websockets + MongoDB
