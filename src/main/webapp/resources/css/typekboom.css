@@ -1,0 +1,74 @@
+html,body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+article,aside,figcaption,figure,footer,header,nav,section {
+	display: block;
+}
+
+#centralizer {
+	margin: 0 auto;
+	width: 800px;
+}
+
+#game-centralizer {
+	margin: auto;
+	width: 600px;
+}
+
+#footer {
+	display: inline;
+	position: absolute;
+	top: 100%;
+	margin-top: -20px;
+	text-align: center;
+	width: 100%;
+}
+
+#footer p {
+	margin: 0;
+}
+
+#chat-container {
+	position: relative;
+	display: block;
+	width: 80%;
+	margin: 0 auto;
+}
+
+#chat-area {
+	background-color: blue;
+	width: 100%;
+	height: 80px;
+	margin: 0 auto;
+}
+
+#game-area {
+	background-color: red;
+	margin-top: 10px;
+	min-height: 300px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+#money-maker-1 {
+	height: 133px;
+	width: 100%;
+	background-color: green;
+}
+
+#money-maker-2 {
+	float: left;
+	height: 400px;
+	width: 150px;
+	background-color: lightgreen;
+}
+
+#money-maker-3 {
+	width: 100%;
+	height: 100px;
+	background-color: darkgreen;
+}
