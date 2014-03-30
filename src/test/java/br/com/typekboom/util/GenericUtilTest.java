@@ -1,11 +1,11 @@
 package br.com.typekboom.util;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.typekboom.persistence.DefaultDao;
-
-import static org.junit.Assert.*;
 
 public class GenericUtilTest {
 	
