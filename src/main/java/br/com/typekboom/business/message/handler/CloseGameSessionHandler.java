@@ -1,8 +1,8 @@
-package br.com.typekboom.business.message;
+package br.com.typekboom.business.message.handler;
 
 import javax.websocket.Session;
 
-public class CloseGameSessionMessage implements Message {
+public class CloseGameSessionHandler extends MessageHandler {
 
 	@Override
 	public void handleMessage(Session session, String message) {

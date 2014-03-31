@@ -16,6 +16,8 @@ import static org.junit.Assert.*;
 
 public class GameSessionManagerTest {
 	
+	private final String SESSION_NAME = "ANY NAME" ;
+	
 	private GameSessionManager manager;
 	
 	@Before
@@ -35,9 +37,22 @@ public class GameSessionManagerTest {
 		when(session.getUserProperties() ).thenReturn(mapParameter);
 		Integer oldSize = manager.getGameSessions().size();
 		
-		manager.createGameSession(session, GameType.ENGLISH_TO_PORTUGUESE );
+		manager.createGameSession(session, SESSION_NAME ,  GameType.ENGLISH_TO_PORTUGUESE );
 		
 		assertNotSame("Should have created a new gameSession" ,  oldSize , manager.getGameSessions().size() );
+	}
+	
+	@Test
+	public void givenASessionAndAGameTypeShouldCreateANewGameSessionWithTheGivenName(){
+		Map<String, Object> mapParameter = new HashMap<>();
+		Session session = mock(Session.class);
+		when(session.getUserProperties() ).thenReturn(mapParameter);
+		Integer oldSize = manager.getGameSessions().size();
+		
+		GameSession gameSession = manager.createGameSession(session, SESSION_NAME ,  GameType.ENGLISH_TO_PORTUGUESE );
+		
+		assertNotSame("Should have created a new gameSession" ,  oldSize , manager.getGameSessions().size() );
+		assertEquals("GameSession should have the given name", SESSION_NAME, gameSession.getSessionName() );
 	}
 	
 	@Test
@@ -46,7 +61,7 @@ public class GameSessionManagerTest {
 		Session session = mock(Session.class);
 		when(session.getUserProperties() ).thenReturn(mapParameter);
 		
-		manager.createGameSession(session, GameType.ENGLISH_TO_PORTUGUESE );
+		manager.createGameSession(session, SESSION_NAME,  GameType.ENGLISH_TO_PORTUGUESE );
 		
 		assertNotNull( "Should have set the gameSession parameter" , mapParameter.get("gameSession") );
 	}
@@ -56,7 +71,7 @@ public class GameSessionManagerTest {
 		Map<String, Object> mapParameter = new HashMap<>();
 		Session session = mock(Session.class);
 		when(session.getUserProperties() ).thenReturn(mapParameter);
-		manager.createGameSession(session, GameType.ENGLISH_TO_PORTUGUESE );
+		manager.createGameSession(session, SESSION_NAME  , GameType.ENGLISH_TO_PORTUGUESE );
 		String gameSessionId = (String) mapParameter.get("gameSession");
 		
 		assertNotSame("Should have 1 open session" , 0 , manager.getGameSessions().size() );
@@ -71,7 +86,7 @@ public class GameSessionManagerTest {
 		Map<String, Object> mapParameter = new HashMap<>();
 		Session session = mock(Session.class);
 		when(session.getUserProperties() ).thenReturn(mapParameter);
-		manager.createGameSession(session, GameType.ENGLISH_TO_PORTUGUESE );
+		manager.createGameSession(session, SESSION_NAME , GameType.ENGLISH_TO_PORTUGUESE );
 		String gameSessionId = "";
 		
 		manager.destroyGameSession( gameSessionId );
@@ -84,7 +99,7 @@ public class GameSessionManagerTest {
 		Map<String, Object> mapParameter = new HashMap<>();
 		Session session = mock(Session.class);
 		when(session.getUserProperties() ).thenReturn(mapParameter);
-		manager.createGameSession(session, GameType.ENGLISH_TO_PORTUGUESE );
+		manager.createGameSession(session, SESSION_NAME, GameType.ENGLISH_TO_PORTUGUESE );
 		String gameSessionId = (String) mapParameter.get("gameSession");
 		
 		GameSession gameSession = manager.getGameSession(gameSessionId);

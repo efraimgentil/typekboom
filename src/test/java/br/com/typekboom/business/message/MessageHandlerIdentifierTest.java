@@ -7,21 +7,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.typekboom.business.MessageParser;
-import br.com.typekboom.business.message.MessageIdentifier;
+import br.com.typekboom.business.message.MessageHandlerIdentifier;
 import br.com.typekboom.business.message.exception.MessageWithNoTypeException;
 import br.com.typekboom.business.message.exception.WrongMessageTypeException;
+import br.com.typekboom.business.message.handler.CloseGameSessionHandler;
+import br.com.typekboom.business.message.handler.JoinGameSessionHandler;
+import br.com.typekboom.business.message.handler.MessageHandler;
+import br.com.typekboom.business.message.handler.UpdateGameSessionHandler;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
-public class MessageIdentifierTest {
+public class MessageHandlerIdentifierTest {
 	
-	private MessageIdentifier identifier;
+	private MessageHandlerIdentifier identifier;
 	private MessageParser parser;
 	
 	@Before
 	public void setUp(){
 		parser = mock(MessageParser.class);
-		identifier = new MessageIdentifier( parser );
+		identifier = new MessageHandlerIdentifier( parser );
 	}
 	
 	@Test
@@ -31,9 +35,9 @@ public class MessageIdentifierTest {
 		valuesMap.put("type", "join-game");
 		when( parser.processToMap(anyString()) ).thenReturn(  valuesMap );
 		
-		Message message  = identifier.discoverType(messageString);
+		MessageHandler message  = identifier.identifyHandler(messageString);
 		
-		assertTrue("Should return a JoinGameSessionMessage" , message instanceof JoinGameSessionMessage );
+		assertTrue("Should return a JoinGameSessionHandler" , message instanceof JoinGameSessionHandler );
 	}
 	
 	@Test
@@ -43,9 +47,9 @@ public class MessageIdentifierTest {
 		valuesMap.put("type", "update-game");
 		when( parser.processToMap(anyString()) ).thenReturn(  valuesMap );
 		
-		Message message  = identifier.discoverType(messageString);
+		MessageHandler message  = identifier.identifyHandler(messageString);
 		
-		assertTrue("Should return a UpdateGameSessionMessage" , message instanceof UpdateGameSessionMessage );
+		assertTrue("Should return a UpdateGameSessionHandler" , message instanceof UpdateGameSessionHandler );
 	}
 	
 	@Test
@@ -55,9 +59,22 @@ public class MessageIdentifierTest {
 		valuesMap.put("type", "close-game");
 		when( parser.processToMap(anyString()) ).thenReturn(  valuesMap );
 		
-		Message message  = identifier.discoverType(messageString);
+		MessageHandler message  = identifier.identifyHandler(messageString);
 		
-		assertTrue("Should return a UpdateGameSessionMessage" , message instanceof CloseGameSessionMessage );
+		assertTrue("Should return a CloseGameSessionHandler" , message instanceof CloseGameSessionHandler );
+	}
+	
+	@Test
+	public void givenAStringMessageWithTpeJoinGameShouldReturnAJoinGameSessionMessageAndSetTheMessageParser() throws MessageWithNoTypeException, WrongMessageTypeException{
+		String messageString = "MESSAGE IS NOT IMPORTANT FOR THE TEST";
+		Map<String, String> valuesMap = new HashMap<>();
+		valuesMap.put("type", "join-game");
+		when( parser.processToMap(anyString()) ).thenReturn(  valuesMap );
+		
+		MessageHandler message  = identifier.identifyHandler(messageString);
+		
+		assertTrue("Should return a JoinGameSessionHandler" , message instanceof JoinGameSessionHandler );
+		assertEquals("Should have the same parser" ,  parser , message.getParser() );
 	}
 	
 	@Test(expected = MessageWithNoTypeException.class)
@@ -66,7 +83,7 @@ public class MessageIdentifierTest {
 		Map<String, String> valuesMap = new HashMap<>();
 		when( parser.processToMap(anyString()) ).thenReturn(  valuesMap );
 		
-		Message message  = identifier.discoverType(messageString);
+		MessageHandler message  = identifier.identifyHandler(messageString);
 	}
 	
 	@Test(expected = WrongMessageTypeException.class)
@@ -76,7 +93,7 @@ public class MessageIdentifierTest {
 		valuesMap.put("type", "that don't even make sense");
 		when( parser.processToMap(anyString()) ).thenReturn(  valuesMap );
 		
-		Message message  = identifier.discoverType(messageString);
+		MessageHandler message  = identifier.identifyHandler(messageString);
 	}
 	
 }

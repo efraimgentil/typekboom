@@ -1,8 +1,8 @@
-package br.com.typekboom.business.message;
+package br.com.typekboom.business.message.handler;
 
 import javax.websocket.Session;
 
-public class JoinGameSessionMessage implements Message {
+public class JoinGameSessionHandler extends MessageHandler {
 	
 	
 	@Override

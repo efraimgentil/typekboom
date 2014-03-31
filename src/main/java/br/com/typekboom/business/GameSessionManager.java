@@ -27,12 +27,14 @@ public class GameSessionManager {
 		manager = new GameSessionManager();
 	}
 	
-	public void createGameSession(Session session , GameType gameType){
+	public GameSession createGameSession(Session session, String sessionName ,  GameType gameType){
 		String gameSessionId = String.valueOf( new Date().getTime() );
 		GameSession gameSession = new GameSession( gameSessionId,  gameType );
 		gameSession.addPlayer(session);
+		gameSession.setSessionName(sessionName);
 		session.getUserProperties().put("gameSession", gameSessionId );
 		gameSessions.put( gameSessionId , gameSession );
+		return gameSession;
 	}
 	
 	public void destroyGameSession(String gameSessionId ){
