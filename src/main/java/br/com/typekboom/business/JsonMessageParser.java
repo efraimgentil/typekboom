@@ -11,11 +11,11 @@ import javax.json.stream.JsonParser;
 
 import br.com.typekboom.business.exception.NotPossibleToCreateInstanceException;
 
-public class JsonMessageTranslator implements MessageTranslator {
+public class JsonMessageParser implements MessageParser {
 
 	@Override
 	public <T> T translate(String message, Class<T> clazz) throws NotPossibleToCreateInstanceException {
-		Map<String, String> jsonMap =processJson(message);
+		Map<String, String> jsonMap = processToMap(message);
 		return mapToClassInstance(jsonMap, clazz);
 	}
 	
@@ -53,7 +53,7 @@ public class JsonMessageTranslator implements MessageTranslator {
 		}
 	}
 	
-	protected Map<String, String> processJson(String message) {
+	public Map<String, String> processToMap(String message) {
 		Map<String, String> jsonMap = new HashMap<>();
 		
 		JsonParser parser = Json.createParser(new StringReader(message));

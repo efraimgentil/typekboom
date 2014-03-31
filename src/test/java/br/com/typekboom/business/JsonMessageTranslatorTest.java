@@ -10,11 +10,11 @@ import org.junit.Test;
 
 public class JsonMessageTranslatorTest {
 	
-	MessageTranslator translator;
+	MessageParser translator;
 	
 	@Before
 	public void setUp(){
-		translator = new JsonMessageTranslator();
+		translator = new JsonMessageParser();
 	}
 	
 	@Test
